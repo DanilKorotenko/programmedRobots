@@ -12,14 +12,14 @@ TEMPLATE = app
 SOURCES += ./Sources/main.cpp \
 	./Sources/pongwidget.cpp \
 	./Sources/mainWindow.cpp \
-	./Sources/ProgrammedObject.cpp \
+	./Sources/ProgrammedObjects/ProgrammedObject.cpp \
 	./Sources/pongai.cpp \
 	./Sources/ProgrammedObjectPrototype.cpp
 
 HEADERS  += \
 	./Sources/pongwidget.h \
 	./Sources/mainWindow.h \
-	./Sources/ProgrammedObject.h \
+	./Sources/ProgrammedObjects/ProgrammedObject.h \
 	./Sources/pongai.h \
 	./Sources/ProgrammedObjectPrototype.h
 
