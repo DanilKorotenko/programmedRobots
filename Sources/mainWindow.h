@@ -4,7 +4,7 @@
 #include <QtGui/QMainWindow>
 #include <QResizeEvent>
 
-class Shape;
+class ProgrammedObject;
 class QTimer;
 class PongWidget;
 class QTextEdit;
@@ -31,10 +31,10 @@ private:
 	PongWidget *_pongWidget;
 	QTextEdit *_textEdit;
 
-	Shape *_leftPaddle;
-	Shape *_rightPaddle;
-	Shape *_ball;
-	Shape *_court;
+	ProgrammedObject *_leftPaddle;
+	ProgrammedObject *_rightPaddle;
+	ProgrammedObject *_ball;
+	ProgrammedObject *_court;
 
 	PongAI *_pongAI;
 

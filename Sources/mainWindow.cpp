@@ -10,7 +10,7 @@
 #include <QFile>
 #include <QTextStream>
 
-#include "shape.h"
+#include "ProgrammedObject.h"
 #include "pongwidget.h"
 #include "pongai.h"
 
@@ -55,10 +55,10 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 	connect(_timer, SIGNAL(timeout()), this, SLOT(slotUpdate()));
 	_timer->start(kUpdateInterval);
 
-	_leftPaddle = new Shape(this);
-	_rightPaddle = new Shape(this);
-	_ball = new Shape(this);
-	_court = new Shape(this);
+	_leftPaddle = new ProgrammedObject(this);
+	_rightPaddle = new ProgrammedObject(this);
+	_ball = new ProgrammedObject(this);
+	_court = new ProgrammedObject(this);
 
 	_pongWidget->setFocus();
 

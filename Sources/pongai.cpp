@@ -10,10 +10,10 @@
 
 #include <QDebug>
 
-#include "shape.h"
-#include "shapeprototype.h"
+#include "ProgrammedObject.h"
+#include "ProgrammedObjectPrototype.h"
 
-Q_DECLARE_METATYPE(Shape*)
+Q_DECLARE_METATYPE(ProgrammedObject*)
 
 PongAI::PongAI(QString script, QObject *parent) : QObject(parent)
 {
@@ -22,16 +22,16 @@ PongAI::PongAI(QString script, QObject *parent) : QObject(parent)
 	_scriptEngine.globalObject().setProperty("kDownDirection", kDownDirection);
 	_scriptEngine.globalObject().setProperty("kStationaryDirection", kStationaryDirection);
 
-	_shapePrototype = new ShapePrototype(this);
-	_scriptEngine.setDefaultPrototype(qMetaTypeId<Shape *>(),
-		_scriptEngine.newQObject(_shapePrototype));
+	_programmedObjectPrototype = new ProgrammedObjectPrototype(this);
+	_scriptEngine.setDefaultPrototype(qMetaTypeId<ProgrammedObject *>(),
+		_scriptEngine.newQObject(_programmedObjectPrototype));
 
 	_scriptEngine.evaluate(script);
 	_jsNextMoveFunction = _scriptEngine.globalObject().property("nextMove");
 
 }
 
-Direction PongAI::nextMove(Shape *paddle, Shape *ball)
+Direction PongAI::nextMove(ProgrammedObject *paddle, ProgrammedObject *ball)
 {
 	// Cache 'paddle' and 'ball' wrapper objects to pass to 'nextMove' function.
 	QScriptValue jsBall = _scriptEngine.newQObject(ball);

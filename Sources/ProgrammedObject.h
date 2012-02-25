@@ -1,15 +1,15 @@
-#ifndef SHAPE_H
-#define SHAPE_H
+#ifndef PROGRAMMEDOBJECT_H
+#define PROGRAMMEDOBJECT_H
 
 #include <QObject>
 
 #include <QRect>
 
-class Shape : public QObject
+class ProgrammedObject : public QObject
 {
 	Q_OBJECT
 public:
-	explicit Shape(QObject *parent = 0);
+	explicit ProgrammedObject(QObject *parent = 0);
 
 	void setRect(QRect rect);
 	QRect rect();
@@ -38,4 +38,4 @@ private:
 
 };
 
-#endif // SHAPE_H
+#endif // PROGRAMMEDOBJECT_H

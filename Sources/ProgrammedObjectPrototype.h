@@ -1,10 +1,10 @@
-#ifndef SHAPEPROTOTYPE_H
-#define SHAPEPROTOTYPE_H
+#ifndef PROGRAMMEDOBJECTPROTOTYPE_H
+#define PROGRAMMEDOBJECTPROTOTYPE_H
 
 #include <QObject>
 #include <QScriptable>
 
-class ShapePrototype : public QObject, public QScriptable
+class ProgrammedObjectPrototype : public QObject, public QScriptable
 {
 	Q_OBJECT
 	Q_PROPERTY(qint16 left READ left)
@@ -17,7 +17,7 @@ class ShapePrototype : public QObject, public QScriptable
 	Q_PROPERTY(qint16 middleX READ middleX)
 
 public:
-	ShapePrototype(QObject *parent = 0);
+	ProgrammedObjectPrototype(QObject *parent = 0);
 
 	qint16 left();
 	qint16 top();
@@ -35,4 +35,4 @@ public slots:
 
 };
 
-#endif // SHAPEPROTOTYPE_H
+#endif // PROGRAMMEDOBJECTPROTOTYPE_H

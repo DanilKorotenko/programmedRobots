@@ -6,8 +6,8 @@
 #include <QScriptValue>
 #include <QString>
 
-class Shape;
-class ShapePrototype;
+class ProgrammedObject;
+class ProgrammedObjectPrototype;
 
 typedef enum
 {
@@ -22,14 +22,14 @@ class PongAI : public QObject
 public:
 	explicit PongAI(QString script, QObject *parent = 0);
 
-	Direction nextMove(Shape *paddle, Shape *ball);
+	Direction nextMove(ProgrammedObject *paddle, ProgrammedObject *ball);
 
 private:
 	QScriptEngine _scriptEngine;
 
 	QScriptValue _jsNextMoveFunction;
 
-	ShapePrototype *_shapePrototype;
+	ProgrammedObjectPrototype *_programmedObjectPrototype;
 
 };
 
