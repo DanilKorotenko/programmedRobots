@@ -10,7 +10,7 @@
 
 #include <QDebug>
 
-#include "ProgrammedObject.h"
+#include "ProgrammedObjects/ProgrammedObject.h"
 #include "ProgrammedObjectPrototype.h"
 
 Q_DECLARE_METATYPE(ProgrammedObject*)

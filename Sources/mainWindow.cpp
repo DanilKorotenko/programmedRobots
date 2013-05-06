@@ -10,7 +10,7 @@
 #include <QFile>
 #include <QTextStream>
 
-#include "ProgrammedObject.h"
+#include "ProgrammedObjects/ProgrammedObject.h"
 #include "pongwidget.h"
 #include "pongai.h"
 

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui script
+QT += widgets script
 
 TARGET = JSPong_Qt
 TEMPLATE = app

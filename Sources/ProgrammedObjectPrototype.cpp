@@ -1,6 +1,6 @@
 #include "ProgrammedObjectPrototype.h"
 
-#include "ProgrammedObject.h"
+#include "ProgrammedObjects/ProgrammedObject.h"
 #include <QtScript/QScriptValue>
 #include <QtScript/QScriptEngine>
 #include <QDebug>
