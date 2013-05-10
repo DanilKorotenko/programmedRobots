@@ -83,5 +83,5 @@ void MainWindow::slotTextChanged()
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-	this->update();
+	_pongWidget->reset(_textEdit->toPlainText());
 }

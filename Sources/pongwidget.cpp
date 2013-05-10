@@ -252,3 +252,8 @@ void PongWidget::update()
 
 	this->repaint();
 }
+
+void PongWidget::resizeEvent(QResizeEvent *event)
+{
+	this->reset(_script);
+}
