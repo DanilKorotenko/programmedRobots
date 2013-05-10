@@ -7,6 +7,7 @@
 class QTimer;
 class PongWidget;
 class QTextEdit;
+class QListWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -18,7 +19,7 @@ public:
 
 private slots:
 	void slotUpdate();
-	void slotTabDidChange(int tabIndex);
+	void slotTextChanged();
 
 protected:
 	void resizeEvent(QResizeEvent *event);
@@ -26,6 +27,7 @@ protected:
 private:
 	PongWidget *_pongWidget;
 	QTextEdit *_textEdit;
+	QListWidget *_objectsList;
 
 	QTimer *_timer;
 };

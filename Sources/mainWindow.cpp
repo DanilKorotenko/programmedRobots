@@ -4,11 +4,13 @@
 ************************************************************/
 
 #include "mainWindow.h"
-#include <QTableWidget>
+
 #include <QTextEdit>
 #include <QTimer>
 #include <QFile>
 #include <QTextStream>
+#include <QSplitter>
+#include <QListWidget>
 
 #include "ProgrammedObjects/ProgrammedObject.h"
 #include "pongwidget.h"
@@ -17,27 +19,28 @@
 #include <QDebug>
 
 //Constants
-
-enum
-{
-	kPongWidgetIndex = 0,
-	kAIScriptWidgetIndex
-};
-
 #define kUpdateInterval 30
 
 // Implementation
 MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 	QMainWindow(parent, flags)
 {
-	QTabWidget *tabWidget = new QTabWidget(this);
-	this->setCentralWidget(tabWidget);
+	QSplitter *splitter = new QSplitter(this);
+	splitter->setOrientation(Qt::Horizontal);
+	this->setCentralWidget(splitter);
 
 	_pongWidget = new PongWidget(this);
-	tabWidget->insertTab(kPongWidgetIndex, _pongWidget, tr("Pong"));
+	splitter->addWidget(_pongWidget);
+
+	QSplitter *rightPanel = new QSplitter(this);
+	rightPanel->setOrientation(Qt::Vertical);
+	splitter->addWidget(rightPanel);
+
+	_objectsList = new QListWidget(this);
+	rightPanel->addWidget(_objectsList);
 
 	_textEdit = new QTextEdit(this);
-	tabWidget->insertTab(kAIScriptWidgetIndex, _textEdit, tr("AI script"));
+	rightPanel->addWidget(_textEdit);
 
 	QFile file(":PongAI.js");
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -47,8 +50,8 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 	QString lines  = in.readAll();
 	_textEdit->setText(lines);
 
-	connect(tabWidget, SIGNAL(currentChanged(int)),
-		this, SLOT(slotTabDidChange(int)));
+	connect(_textEdit, SIGNAL(textChanged()),
+		this, SLOT(slotTextChanged()));
 
 	_timer = new QTimer(this);
 	connect(_timer, SIGNAL(timeout()), this, SLOT(slotUpdate()));
@@ -72,17 +75,10 @@ void MainWindow::slotUpdate()
 	_pongWidget->update();
 }
 
-void MainWindow::slotTabDidChange(int tabIndex)
+void MainWindow::slotTextChanged()
 {
-	if (kPongWidgetIndex == tabIndex)
-	{
-		_pongWidget->reset(_textEdit->toPlainText());
-		_timer->start(kUpdateInterval);
-	}
-	else if (kAIScriptWidgetIndex == tabIndex)
-	{
-		_timer->stop();
-	}
+	_pongWidget->reset(_textEdit->toPlainText());
+	_timer->start(kUpdateInterval);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
