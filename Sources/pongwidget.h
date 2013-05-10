@@ -14,15 +14,6 @@ class PongWidget : public QWidget
 public:
 	explicit PongWidget(QWidget *parent = 0);
 
-	QRect leftPaddleRect();
-	void setLeftPaddleRect(QRect value);
-
-	QRect rightPaddleRect();
-	void setRightPaddleRect(QRect value);
-
-	QRect ballRect();
-	void setBallRect(QRect value);
-
 	int lastKeyCode();
 	void setLastKeyCode(int keyCode);
 
@@ -30,10 +21,6 @@ public:
 	void update();
 
 private:
-	QRect _leftPaddleRect;
-	QRect _rightPaddleRect;
-	QRect _ballRect;
-
 	int _lastKeyCode;
 
 	ProgrammedObject *_leftPaddle;

@@ -25,46 +25,6 @@ PongWidget::PongWidget(QWidget *parent) : QWidget(parent)
 	_rightPaddle = new ProgrammedObject(this);
 	_ball = new ProgrammedObject(this);
 	_court = new ProgrammedObject(this);
-
-}
-
-QRect PongWidget::leftPaddleRect()
-{
-	return _leftPaddleRect;
-}
-
-void PongWidget::setLeftPaddleRect(QRect value)
-{
-	if (_leftPaddleRect != value)
-	{
-		_leftPaddleRect = value;
-	}
-}
-
-QRect PongWidget::rightPaddleRect()
-{
-	return _rightPaddleRect;
-}
-
-void PongWidget::setRightPaddleRect(QRect value)
-{
-	if (_rightPaddleRect != value)
-	{
-		_rightPaddleRect = value;
-	}
-}
-
-QRect PongWidget::ballRect()
-{
-	return _ballRect;
-}
-
-void PongWidget::setBallRect(QRect value)
-{
-	if (_ballRect != value)
-	{
-		_ballRect.setRect(value.x(), value.y(), value.width(),value.height());
-	}
 }
 
 /* Tracks which key is depressed. */
@@ -90,12 +50,12 @@ void PongWidget::paintEvent(QPaintEvent *event)
 
 	painter.fillRect(paintRect, Qt::black);
 
-	painter.fillRect(_leftPaddleRect, Qt::white);
+	painter.fillRect(_leftPaddle->rect(), Qt::white);
 
-	painter.fillRect(_rightPaddleRect, Qt::white);
+	painter.fillRect(_rightPaddle->rect(), Qt::white);
 
 	painter.setBrush(QBrush(Qt::white));
-	painter.drawEllipse(_ballRect);
+	painter.drawEllipse(_ball->rect());
 }
 
 void PongWidget::keyPressEvent(QKeyEvent *event)
@@ -164,10 +124,6 @@ void PongWidget::reset(QString script)
 	_deltaX = -kUpdateDistance;
 	_deltaY = -kUpdateDistance;
 
-	this->setBallRect(_ball->rect());
-	this->setLeftPaddleRect(_leftPaddle->rect());
-	this->setRightPaddleRect(_rightPaddle->rect());
-
 	_pongAI = new PongAI(script, this);
 }
 
@@ -203,7 +159,6 @@ void PongWidget::update()
 		{
 			_leftPaddle->moveY(-kUpdateDistance);
 		}
-		this->setLeftPaddleRect(_leftPaddle->rect());
 	}
 	else if (Qt::Key_Down == keyCode)
 	{
@@ -211,7 +166,6 @@ void PongWidget::update()
 		{
 			_leftPaddle->moveY(kUpdateDistance);
 		}
-		this->setLeftPaddleRect(_leftPaddle->rect());
 	}
 
 	// Move AI paddle
@@ -222,7 +176,6 @@ void PongWidget::update()
 		{
 			_rightPaddle->moveY(-kUpdateDistance);
 		}
-		this->setRightPaddleRect(_rightPaddle->rect());
 	}
 	else if (direction == kDownDirection)
 	{
@@ -230,7 +183,6 @@ void PongWidget::update()
 		{
 			_rightPaddle->moveY(kUpdateDistance);
 		}
-		this->setRightPaddleRect(_rightPaddle->rect());
 	}
 
 	// Bounce off bottom of screen
@@ -298,6 +250,5 @@ void PongWidget::update()
 	_ball->moveX(_deltaX);
 	_ball->moveY(_deltaY);
 
-	this->setBallRect(_ball->rect());
 	this->repaint();
 }
