@@ -91,13 +91,18 @@ void PongWidget::keyReleaseEvent(QKeyEvent *event)
 
 void PongWidget::resizeEvent(QResizeEvent *event)
 {
-	this->reset(_script);
+	this->reset();
+}
+
+void PongWidget::setScript(QString script)
+{
+	_script = script;
+	reset();
 }
 
 /* Returns all shapes to their starting positions and allocates a new AI. */
-void PongWidget::reset(QString script)
+void PongWidget::reset()
 {
-	_script = script;
 	QRect rect;
 	QRect courtRect = this->rect();
 
@@ -115,7 +120,7 @@ void PongWidget::reset(QString script)
 	_deltaX = -kUpdateDistance;
 	_deltaY = -kUpdateDistance;
 
-	_pongAI = new PongAI(script, this);
+	_pongAI = new PongAI(_script, this);
 }
 
 void PongWidget::update()
@@ -123,21 +128,21 @@ void PongWidget::update()
 	// Spacebar
 	if (Qt::Key_Space == _lastKeyCode)
 	{
-		this->reset(_script);
+		this->reset();
 		return;
 	}
 
 	// Exit off left side of screen
 	if (_ball->right() < _court->left())
 	{
-		this->reset(_script);
+		this->reset();
 		return;
 	}
 
 	// Exit off right side of screen
 	if (_ball->left() > _court->right())
 	{
-		this->reset(_script);
+		this->reset();
 		return;
 	}
 

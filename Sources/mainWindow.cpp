@@ -62,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 	this->resize(550,350);
 
 	// Begin game.
-	_pongWidget->reset(_textEdit->toPlainText());
+	_pongWidget->setScript(_textEdit->toPlainText());
 }
 
 MainWindow::~MainWindow()
@@ -77,11 +77,11 @@ void MainWindow::slotUpdate()
 
 void MainWindow::slotTextChanged()
 {
-	_pongWidget->reset(_textEdit->toPlainText());
+	_pongWidget->setScript(_textEdit->toPlainText());
 	_timer->start(kUpdateInterval);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-	_pongWidget->reset(_textEdit->toPlainText());
+	_pongWidget->reset();
 }

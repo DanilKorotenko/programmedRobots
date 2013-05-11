@@ -14,7 +14,8 @@ class PongWidget : public QWidget
 public:
 	explicit PongWidget(QWidget *parent = 0);
 
-	void reset(QString script);
+	void setScript(QString script);
+	void reset();
 	void update();
 
 private:
