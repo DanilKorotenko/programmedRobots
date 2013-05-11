@@ -27,21 +27,6 @@ PongWidget::PongWidget(QWidget *parent) : QWidget(parent)
 	_court = new ProgrammedObject(this);
 }
 
-/* Tracks which key is depressed. */
-
-int PongWidget::lastKeyCode()
-{
-	return _lastKeyCode;
-}
-
-void PongWidget::setLastKeyCode(int keyCode)
-{
-	if (_lastKeyCode != keyCode)
-	{
-		_lastKeyCode = keyCode;
-	}
-}
-
 void PongWidget::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
@@ -58,6 +43,7 @@ void PongWidget::paintEvent(QPaintEvent *event)
 	painter.drawEllipse(_ball->rect());
 }
 
+/* Tracks which key is depressed. */
 void PongWidget::keyPressEvent(QKeyEvent *event)
 {
 	int keyCode = event->key();
@@ -68,7 +54,7 @@ void PongWidget::keyPressEvent(QKeyEvent *event)
 		case Qt::Key_Down:
 		case Qt::Key_Space:
 		{
-			this->setLastKeyCode(keyCode);
+			_lastKeyCode = keyCode;
 			break;
 		}
 		default:
@@ -89,9 +75,9 @@ void PongWidget::keyReleaseEvent(QKeyEvent *event)
 		case Qt::Key_Down:
 		case Qt::Key_Space:
 		{
-			if (keyCode == this->lastKeyCode())
+			if (keyCode == _lastKeyCode)
 			{
-				this->setLastKeyCode(0);
+				_lastKeyCode = 0;
 			}
 			break;
 		}
@@ -101,6 +87,11 @@ void PongWidget::keyReleaseEvent(QKeyEvent *event)
 			break;
 		}
 	};
+}
+
+void PongWidget::resizeEvent(QResizeEvent *event)
+{
+	this->reset(_script);
 }
 
 /* Returns all shapes to their starting positions and allocates a new AI. */
@@ -129,10 +120,8 @@ void PongWidget::reset(QString script)
 
 void PongWidget::update()
 {
-	int keyCode = this->lastKeyCode();
-
 	// Spacebar
-	if (Qt::Key_Space == keyCode)
+	if (Qt::Key_Space == _lastKeyCode)
 	{
 		this->reset(_script);
 		return;
@@ -153,14 +142,14 @@ void PongWidget::update()
 	}
 
 	// Move human paddle
-	if (Qt::Key_Up == keyCode)
+	if (Qt::Key_Up == _lastKeyCode)
 	{
 		if (_leftPaddle->top() > 0)
 		{
 			_leftPaddle->moveY(-kUpdateDistance);
 		}
 	}
-	else if (Qt::Key_Down == keyCode)
+	else if (Qt::Key_Down == _lastKeyCode)
 	{
 		if (_leftPaddle->bottom() < _court->bottom())
 		{
@@ -251,9 +240,4 @@ void PongWidget::update()
 	_ball->moveY(_deltaY);
 
 	this->repaint();
-}
-
-void PongWidget::resizeEvent(QResizeEvent *event)
-{
-	this->reset(_script);
 }

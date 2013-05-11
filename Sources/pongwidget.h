@@ -14,9 +14,6 @@ class PongWidget : public QWidget
 public:
 	explicit PongWidget(QWidget *parent = 0);
 
-	int lastKeyCode();
-	void setLastKeyCode(int keyCode);
-
 	void reset(QString script);
 	void update();
 
