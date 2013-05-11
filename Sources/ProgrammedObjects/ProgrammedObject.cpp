@@ -6,6 +6,8 @@
 
 #include "ProgrammedObject.h"
 
+#include "../pongai.h"
+
 ProgrammedObject::ProgrammedObject(QObject *parent) : QObject(parent)
 {
 }
@@ -85,4 +87,39 @@ void ProgrammedObject::moveY(qint16 deltaY)
 bool ProgrammedObject::intersects(QRect rect)
 {
 	return _rect.intersects(rect);
+}
+
+QString ProgrammedObject::script()
+{
+	return _script;
+}
+
+void ProgrammedObject::setScript(QString script)
+{
+	_script = script;
+}
+
+void ProgrammedObject::reset()
+{
+	_pongAI = new PongAI(_script, this);
+}
+
+void ProgrammedObject::update(ProgrammedObject *ball, ProgrammedObject *court)
+{
+	// Move AI paddle
+	Direction direction = _pongAI->nextMove(this, ball);
+	if (direction == kUpDirection)
+	{
+		if (this->top() > 0)
+		{
+			this->moveY(-kUpdateDistance);
+		}
+	}
+	else if (direction == kDownDirection)
+	{
+		if (this->bottom() < court->bottom())
+		{
+			this->moveY(kUpdateDistance);
+		}
+	}
 }

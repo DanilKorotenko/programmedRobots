@@ -15,8 +15,6 @@
 #include "ProgrammedObjects/ProgrammedObject.h"
 #include "pongai.h"
 
-#define kUpdateDistance 4
-
 PongWidget::PongWidget(QWidget *parent) : QWidget(parent)
 {
 	this->setFocusPolicy(Qt::StrongFocus);
@@ -96,7 +94,8 @@ void PongWidget::resizeEvent(QResizeEvent *event)
 
 void PongWidget::setScript(QString script)
 {
-	_script = script;
+	_rightPaddle->setScript(script);
+	_leftPaddle->setScript(script);
 	reset();
 }
 
@@ -113,14 +112,14 @@ void PongWidget::reset()
 
 	rect = QRect(1,50,10,99);
 	_leftPaddle->setRect(rect);
+	_leftPaddle->reset();
 
 	rect = QRect(courtRect.width() - 10,50,10,99);
 	_rightPaddle->setRect(rect);
+	_rightPaddle->reset();
 
 	_deltaX = -kUpdateDistance;
 	_deltaY = -kUpdateDistance;
-
-	_pongAI = new PongAI(_script, this);
 }
 
 void PongWidget::update()
@@ -146,38 +145,8 @@ void PongWidget::update()
 		return;
 	}
 
-	// Move human paddle
-	if (Qt::Key_Up == _lastKeyCode)
-	{
-		if (_leftPaddle->top() > 0)
-		{
-			_leftPaddle->moveY(-kUpdateDistance);
-		}
-	}
-	else if (Qt::Key_Down == _lastKeyCode)
-	{
-		if (_leftPaddle->bottom() < _court->bottom())
-		{
-			_leftPaddle->moveY(kUpdateDistance);
-		}
-	}
-
-	// Move AI paddle
-	Direction direction = _pongAI->nextMove(_rightPaddle, _ball);
-	if (direction == kUpDirection)
-	{
-		if (_rightPaddle->top() > 0)
-		{
-			_rightPaddle->moveY(-kUpdateDistance);
-		}
-	}
-	else if (direction == kDownDirection)
-	{
-		if (_rightPaddle->bottom() < _court->bottom())
-		{
-			_rightPaddle->moveY(kUpdateDistance);
-		}
-	}
+	_rightPaddle->update(_ball, _court);
+	_leftPaddle->update(_ball, _court);
 
 	// Bounce off bottom of screen
 	if (_ball->bottom() <= _court->bottom() + 1)

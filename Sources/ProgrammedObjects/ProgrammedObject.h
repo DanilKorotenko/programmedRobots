@@ -5,6 +5,10 @@
 
 #include <QRect>
 
+static int const kUpdateDistance = 4;
+
+class PongAI;
+
 class ProgrammedObject : public QObject
 {
 	Q_OBJECT
@@ -33,9 +37,17 @@ public:
 
 	bool intersects(QRect rect);
 
+	QString script();
+	void setScript(QString script);
+
+	void reset();
+	void update(ProgrammedObject *ball, ProgrammedObject *court);
+
 private:
 	QRect _rect;
+	QString _script;
 
+	PongAI *_pongAI;
 };
 
 #endif // PROGRAMMEDOBJECT_H
