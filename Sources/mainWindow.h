@@ -5,7 +5,7 @@
 #include <QResizeEvent>
 
 class QTimer;
-class PongWidget;
+class GameArea;
 class QTextEdit;
 class QListWidget;
 
@@ -25,7 +25,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 
 private:
-	PongWidget *_pongWidget;
+	GameArea *_gameArea;
 	QTextEdit *_textEdit;
 	QListWidget *_objectsList;
 

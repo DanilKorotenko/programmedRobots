@@ -13,7 +13,7 @@
 #include <QListWidget>
 
 #include "ProgrammedObjects/ProgrammedObject.h"
-#include "pongwidget.h"
+#include "GameArea.h"
 #include "pongai.h"
 
 #include <QDebug>
@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 	splitter->setOrientation(Qt::Horizontal);
 	this->setCentralWidget(splitter);
 
-	_pongWidget = new PongWidget(this);
-	splitter->addWidget(_pongWidget);
+	_gameArea = new GameArea(this);
+	splitter->addWidget(_gameArea);
 
 	QSplitter *rightPanel = new QSplitter(this);
 	rightPanel->setOrientation(Qt::Vertical);
@@ -44,7 +44,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 
 	QFile file(":PongAI.js");
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
 		return;
+	}
 
 	QTextStream in(&file);
 	QString lines  = in.readAll();
@@ -57,12 +59,12 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 	connect(_timer, SIGNAL(timeout()), this, SLOT(slotUpdate()));
 	_timer->start(kUpdateInterval);
 
-	_pongWidget->setFocus();
+	_gameArea->setFocus();
 
 	this->resize(550,350);
 
 	// Begin game.
-	_pongWidget->setScript(_textEdit->toPlainText());
+	_gameArea->setScript(_textEdit->toPlainText());
 }
 
 MainWindow::~MainWindow()
@@ -72,16 +74,16 @@ MainWindow::~MainWindow()
 /* Moves paddles and ball. (Called on a timer.) */
 void MainWindow::slotUpdate()
 {
-	_pongWidget->update();
+	_gameArea->update();
 }
 
 void MainWindow::slotTextChanged()
 {
-	_pongWidget->setScript(_textEdit->toPlainText());
+	_gameArea->setScript(_textEdit->toPlainText());
 	_timer->start(kUpdateInterval);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-	_pongWidget->reset();
+	_gameArea->reset();
 }

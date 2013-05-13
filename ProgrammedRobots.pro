@@ -6,18 +6,18 @@
 
 QT += widgets script
 
-TARGET = JSPong_Qt
+TARGET = ProgrammedRobots
 TEMPLATE = app
 
 SOURCES += ./Sources/main.cpp \
-	./Sources/pongwidget.cpp \
+	./Sources/GameArea.cpp \
 	./Sources/mainWindow.cpp \
 	./Sources/ProgrammedObjects/ProgrammedObject.cpp \
 	./Sources/pongai.cpp \
 	./Sources/ProgrammedObjectPrototype.cpp
 
 HEADERS  += \
-	./Sources/pongwidget.h \
+	./Sources/GameArea.h \
 	./Sources/mainWindow.h \
 	./Sources/ProgrammedObjects/ProgrammedObject.h \
 	./Sources/pongai.h \
