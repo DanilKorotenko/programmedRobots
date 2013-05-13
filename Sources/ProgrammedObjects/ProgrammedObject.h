@@ -41,7 +41,7 @@ public:
 	void setScript(QString script);
 
 	void reset();
-	void update(ProgrammedObject *ball, ProgrammedObject *court);
+	void update(ProgrammedObject *ball, QRect gameAreaRect);
 
 private:
 	QRect _rect;

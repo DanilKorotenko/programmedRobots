@@ -104,7 +104,7 @@ void ProgrammedObject::reset()
 	_pongAI = new PongAI(_script, this);
 }
 
-void ProgrammedObject::update(ProgrammedObject *ball, ProgrammedObject *court)
+void ProgrammedObject::update(ProgrammedObject *ball, QRect gameAreaRect)
 {
 	// Move AI paddle
 	Direction direction = _pongAI->nextMove(this, ball);
@@ -117,7 +117,7 @@ void ProgrammedObject::update(ProgrammedObject *ball, ProgrammedObject *court)
 	}
 	else if (direction == kDownDirection)
 	{
-		if (this->bottom() < court->bottom())
+		if (this->bottom() < gameAreaRect.bottom())
 		{
 			this->moveY(kUpdateDistance);
 		}

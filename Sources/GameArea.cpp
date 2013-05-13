@@ -22,7 +22,6 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
 	_leftPaddle = new ProgrammedObject(this);
 	_rightPaddle = new ProgrammedObject(this);
 	_ball = new ProgrammedObject(this);
-	_court = new ProgrammedObject(this);
 }
 
 void GameArea::paintEvent(QPaintEvent *event)
@@ -103,18 +102,15 @@ void GameArea::setScript(QString script)
 void GameArea::reset()
 {
 	QRect rect;
-	QRect courtRect = this->rect();
 
-	_court->setRect(courtRect);
-
-	rect = QRect(courtRect.width()/2,10,20,20);
+	rect = QRect(this->rect().width()/2,10,20,20);
 	_ball->setRect(rect);
 
 	rect = QRect(1,50,10,99);
 	_leftPaddle->setRect(rect);
 	_leftPaddle->reset();
 
-	rect = QRect(courtRect.width() - 10,50,10,99);
+	rect = QRect(this->rect().width() - 10,50,10,99);
 	_rightPaddle->setRect(rect);
 	_rightPaddle->reset();
 
@@ -132,24 +128,24 @@ void GameArea::update()
 	}
 
 	// Exit off left side of screen
-	if (_ball->right() < _court->left())
+	if (_ball->right() < this->rect().left())
 	{
 		this->reset();
 		return;
 	}
 
 	// Exit off right side of screen
-	if (_ball->left() > _court->right())
+	if (_ball->left() > this->rect().right())
 	{
 		this->reset();
 		return;
 	}
 
-	_rightPaddle->update(_ball, _court);
-	_leftPaddle->update(_ball, _court);
+	_rightPaddle->update(_ball, this->rect());
+	_leftPaddle->update(_ball, this->rect());
 
 	// Bounce off bottom of screen
-	if (_ball->bottom() <= _court->bottom() + 1)
+	if (_ball->bottom() <= this->rect().bottom() + 1)
 	{
 		_deltaY = -_deltaY;
 	}

@@ -23,7 +23,6 @@ private:
 	ProgrammedObject *_leftPaddle;
 	ProgrammedObject *_rightPaddle;
 	ProgrammedObject *_ball;
-	ProgrammedObject *_court;
 
 	int _deltaX;
 	int _deltaY;
